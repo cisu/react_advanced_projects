@@ -1,22 +1,89 @@
-import React, {useState} from 'react';
-import ReactMarkdown from 'react-markdown';
+import React, {useState, useEffect} from 'react';
+
+import {
+  FaEnvelopeOpen,
+  FaUser,
+  FaCalendarTimes,
+  FaMap,
+  FaPhone,
+  FaLock,
+} from 'react-icons/fa';
+
+const url = 'https://randomuser.me/api/';
+const defaultImage = 'https://randomuser.me/api/portraits/men/75.jpg';
 
 function App() {
-  const [markdown, setMarkdown] = useState('## markdown preview');
+  const [loading, setLoading] = useState(true);
+  const [person, setPerson] = useState(null);
+  const [title, setTitle] = useState('name');
+  const [value, setValue] = useState('random person');
+
+  const handleValue = e => {
+    console.log(e.target);
+  };
 
   return (
     <main>
-      <section className='markdown'>
-        <textarea
-          className='input'
-          value={markdown}
-          onChange={e => setMarkdown(e.target.value)}
-        ></textarea>
+      <div className='block bcg-black'></div>
+      <div className='block'>
+        <div className='container'>
+          <img
+            src={(person && person.image) || defaultImage}
+            alt='random user'
+            className='user-img'
+          />
+          <p className='user-title'>my {title} is</p>
+          <p className='user-value'>{value}</p>
+          <div className='values-list'>
+            <button
+              className='icon'
+              data-label='name'
+              onMouseOver={handleValue}
+            >
+              <FaUser />
+            </button>
+            <button
+              className='icon'
+              data-label='email'
+              onMouseOver={handleValue}
+            >
+              <FaEnvelopeOpen />
+            </button>
+            <button
+              className='icon'
+              data-label='age'
+              onMouseOver={handleValue}
+            >
+              <FaCalendarTimes />
+            </button>
+            <button
+              className='icon'
+              data-label='street'
+              onMouseOver={handleValue}
+            >
+              <FaMap />
+            </button>
+            <button
+              className='icon'
+              data-label='phone'
+              onMouseOver={handleValue}
+            >
+              <FaPhone />
+            </button>
+            <button
+              className='icon'
+              data-label='password'
+              onMouseOver={handleValue}
+            >
+              <FaLock />
+            </button>
+          </div>
 
-        <article className='result'>
-          <ReactMarkdown>{markdown}</ReactMarkdown>
-        </article>
-      </section>
+          <button className='btn' type='button'>
+            {loading ? 'loading...' : 'random user'}
+          </button>
+        </div>
+      </div>
     </main>
   );
 }
