@@ -5,6 +5,8 @@ import Follower from './Follower'
 function App() {
   const {loading, data} = useFetch();
 
+  console.log(data);
+
   const [page, setPage] = useState(0);
   const [followers, setFollowers] = useState([]);
 
@@ -24,7 +26,7 @@ function App() {
     <section className="followers">
       <div className="container">
 
-        {data.map((follower) => {
+        {followers.map((follower) => {
           return <Follower key={follower.id} {...follower} />
         })}
 
