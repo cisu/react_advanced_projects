@@ -19,8 +19,55 @@ function App() {
     setPage(index);
   };
 
+
+  const nextPage = () => {
+    setPage((oldPage) => {
+      let nextPage = oldPage + 1;
+      if(nextPage > data.length - 1){
+        nextPage = 0
+      }
+      return nextPage;
+    })
+  }
+
+
+  const prevPage = () => {
+    setPage((oldPage) => {
+      let prevPage = oldPage - 1;
+      if(prevPage < 0){
+        prevPage = 0
+      }
+      return prevPage;
+    })
+  }
+
   return (
     <main>
+
+{!loading && (
+          <div className='btn-container'>
+            <button className='prev-btn' onClick={prevPage}>
+              prev
+            </button>
+
+            {data.map((item, index) => {
+              return (
+                <button
+                  key={index}
+                  className={`page-btn ${index === page && 'active-btn'}`}
+                  onClick={() => handlePage(index)}
+                >
+                  {index + 1}
+                </button>
+              );
+            })}
+
+            <button className='prev-btn' onClick={nextPage}>
+              next
+            </button>
+          </div>
+        )}
+
       <div className='section-title'>
         <h1>{loading ? 'loading...' : 'pagination'}</h1>
         <div className='underline'></div>
@@ -35,6 +82,10 @@ function App() {
 
         {!loading && (
           <div className='btn-container'>
+            <button className='prev-btn' onClick={prevPage}>
+              prev
+            </button>
+
             {data.map((item, index) => {
               return (
                 <button
@@ -46,6 +97,10 @@ function App() {
                 </button>
               );
             })}
+
+            <button className='prev-btn' onClick={nextPage}>
+              next
+            </button>
           </div>
         )}
       </section>
