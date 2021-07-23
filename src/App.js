@@ -6,7 +6,7 @@ const mainUrl = `https://api.unsplash.com/photos/`
 const searchUrl = `https://api.unsplash.com/search/photos/`
 
 
-
+const clientID = `?client_id=${process.env.REACT_APP_ACCESS_KEY}`
 
 function App() {
 
@@ -18,7 +18,7 @@ function App() {
     setLoading(true)
 
     let url;
-    url = `${mainUrl}?client_id=JYL4cDyvfSzsnLp2hcRkf_SWotv7_dxo60gz47gZ0fk`
+    url = `${mainUrl}${clientID}`
 
     try {
       const response = await fetch(url)
