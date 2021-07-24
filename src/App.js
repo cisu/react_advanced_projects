@@ -16,19 +16,25 @@ function App() {
 
   const [loading, setLoading] = useState(false);
   const [photos, setPhotos] = useState([]);
+  const [page, setPage] = useState(1);
 
 
   const fetchImages = async () =>{
     setLoading(true)
 
     let url;
-    url = `${mainUrl}${clientID}&page=3`
+
+    const urlPage = `&page=${page}`;
+
+    url = `${mainUrl}${clientID}${urlPage}`
 
     try {
       const response = await fetch(url)
       const data = await response.json()
       // pass data to photos state
-      setPhotos(data);
+      setPhotos((oldPhotos) => {
+        return [...oldPhotos, ...data]
+      });
       // stop the loading
       setLoading(false);
     } catch (error) {
@@ -39,7 +45,7 @@ function App() {
 
   useEffect(() => {
     fetchImages();
-  }, [])
+  }, [page])
 
 
   useEffect(() => {
@@ -48,8 +54,10 @@ function App() {
       // console.log(`scrollY ${window.scrollY}`);
       // console.log(`body height ${window.document.body.scrollHeight}`);
 
-      if(!loading && (window.innerHeight + window.scrollY) >= document.body.scrollHeight ){
-        console.log('it worked')
+      if(!loading && (window.innerHeight + window.scrollY) >= document.body.scrollHeight - 500){
+        setPage((oldPage) => {
+          return oldPage + 1
+        })
       }
     });
 
