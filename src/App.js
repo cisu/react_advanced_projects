@@ -7,8 +7,6 @@ const clientID = `?client_id=${process.env.REACT_APP_ACCESS_KEY}`
 // const clientID = `?client_id=${process.env.REACT_APP_ACCESS_KEY}`
 const mainUrl = `https://api.unsplash.com/photos/`
 const searchUrl = `https://api.unsplash.com/search/photos/`
- 
-
 
 
 
@@ -17,6 +15,7 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [photos, setPhotos] = useState([]);
   const [page, setPage] = useState(1);
+  const [query, setQuery] = useState('')
 
 
   const fetchImages = async () =>{
@@ -26,15 +25,23 @@ function App() {
 
     const urlPage = `&page=${page}`;
 
-    url = `${mainUrl}${clientID}${urlPage}`
+    const urlQuery = `&query=${query}`;
+
+    if(query){
+      url = `${searchUrl}${clientID}${urlPage}${urlQuery}`;
+    } else {
+      url = `${mainUrl}${clientID}${urlPage}`
+    }
+
 
     try {
       const response = await fetch(url)
       const data = await response.json()
+      console.log(data);
       // pass data to photos state
-      setPhotos((oldPhotos) => {
-        return [...oldPhotos, ...data]
-      });
+      // setPhotos((oldPhotos) => {
+      //   return [...oldPhotos, ...data]
+      // });
       // stop the loading
       setLoading(false);
     } catch (error) {
@@ -68,7 +75,7 @@ function App() {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log('hello');
-
+    fetchImages();
   }
 
 
@@ -77,7 +84,13 @@ function App() {
     <section className="search">
       <form className='search-form'>
 
-        <input type="text" placeholder='search' className='form-input' />
+        <input 
+        type="text" 
+        placeholder='search' 
+        className='form-input'
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+        />
 
         <button type="submit" className='submit-btn' onClick={handleSubmit}>
           <FaSearch />
