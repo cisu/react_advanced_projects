@@ -14,7 +14,7 @@ function App() {
 
   const [loading, setLoading] = useState(false);
   const [photos, setPhotos] = useState([]);
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(0);
   const [query, setQuery] = useState('')
 
 
@@ -71,6 +71,7 @@ function App() {
 
   useEffect(() => {
     fetchImages();
+     // eslint-disable-next-line
   }, [page])
 
 
@@ -89,6 +90,7 @@ function App() {
 
     // remove the event
     return () => window.removeEventListener('scroll', event);
+    // eslint-disable-next-line
   }, [])
 
   // submit the form
