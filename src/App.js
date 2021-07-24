@@ -37,11 +37,30 @@ function App() {
     try {
       const response = await fetch(url)
       const data = await response.json()
-      console.log(data);
-      // pass data to photos state
-      // setPhotos((oldPhotos) => {
-      //   return [...oldPhotos, ...data]
-      // });
+      // console.log(data);
+
+      setPhotos((oldPhotos) => {
+        
+        // if we do a query with the first data on the screen then we remove old data and pass new one.
+        if(query && page ===1){
+          return data.results;
+        }
+        
+        else if (query){  
+          /*
+          if we do a query pass data tp photos state in this way because the return  api is different from query 
+          Object { total: 10000, total_pages: 1000, results: (10) […] }
+          */
+          return [...oldPhotos, ...data.results]
+        } else {
+          // pass data to photos state
+          return [...oldPhotos, ...data]
+        }
+      
+  
+      });
+
+
       // stop the loading
       setLoading(false);
     } catch (error) {
@@ -71,11 +90,14 @@ function App() {
     // remove the event
     return () => window.removeEventListener('scroll', event);
   }, [])
-  
+
+  // submit the form
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('hello');
-    fetchImages();
+    
+    setPage(1);
+
+    // fetchImages();
   }
 
 
