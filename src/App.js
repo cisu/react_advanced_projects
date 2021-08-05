@@ -1,20 +1,10 @@
-import React from 'react';
-import {Switch, Route} from 'react-router-dom';
-
-import Home from './Home';
-import SingleMovie from './SingleMovie';
+import React from 'react'
+import SearchForm from './SearchForm'
+import Stories from './Stories'
+import Buttons from './Buttons'
 
 function App() {
-  return (
-    <Switch>
-      <Route path='/' exact>
-        <Home />
-      </Route>
-      <Route path='/movies/:id' children={<SingleMovie />}>
-        
-        </Route>
-    </Switch>
-  );
+  return <h2>hacker news starter</h2>
 }
 
-export default App;
+export default App
