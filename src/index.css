@@ -288,6 +288,7 @@ Loading
   transition: var(--transition);
   z-index: -1;
 }
+
 .isOpen {
   opacity: 1;
   z-index: 999;

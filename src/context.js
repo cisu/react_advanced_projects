@@ -59,8 +59,12 @@ const AppProvider = ({children}) => {
     setIndex(oldIndex => {
       const index = oldIndex + 1;
       if (index > questions.length - 1) {
-        // openModal()
+        
+        // open the modal
+        openModal()
+
         return 0;
+
       } else {
         return index;
       }
@@ -75,7 +79,19 @@ const AppProvider = ({children}) => {
     }
     nextQuestion()
   }
-  
+
+  // open Modal
+  const openModal = () => {
+    setIsModalOpen(true);
+  }
+
+  // close Modal
+  const closeModal = () => {
+    setWaiting(true);
+    setCorrect(0);
+    setIsModalOpen(false);
+  }
+
 
   useEffect(() => {
     fetchQuestions(tempUrl);
@@ -92,7 +108,8 @@ const AppProvider = ({children}) => {
         error,
         isModalOpen,
         nextQuestion,
-        checkAnswer
+        checkAnswer,
+        closeModal
       }}
     >
       {children}
