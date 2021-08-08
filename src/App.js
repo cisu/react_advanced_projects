@@ -1,16 +1,11 @@
-import React from 'react';
-import SearchForm from './SearchForm';
-import Stories from './Stories';
-import Buttons from './Buttons';
+import React from 'react'
+import { useGlobalContext } from './context'
 
+import SetupForm from './SetupForm'
+import Loading from './Loading'
+import Modal from './Modal'
 function App() {
-  return (
-    <>
-      <SearchForm />
-      <Buttons />
-      <Stories />
-    </>
-  );
+  return <h2>quiz starter</h2>
 }
 
-export default App;
+export default App
