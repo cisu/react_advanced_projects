@@ -53,6 +53,7 @@ const AppProvider = ({children}) => {
     }
   };
 
+
   // next question
   const nextQuestion = () => {
     setIndex(oldIndex => {
@@ -65,6 +66,16 @@ const AppProvider = ({children}) => {
       }
     });
   };
+
+
+  // check in the answer is the right one or you skip the question
+  const checkAnswer = value => {
+    if(value){
+      setCorrect((oldState) => oldState +1)
+    }
+    nextQuestion()
+  }
+  
 
   useEffect(() => {
     fetchQuestions(tempUrl);
@@ -81,6 +92,7 @@ const AppProvider = ({children}) => {
         error,
         isModalOpen,
         nextQuestion,
+        checkAnswer
       }}
     >
       {children}
