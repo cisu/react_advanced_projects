@@ -28,39 +28,47 @@ const AppProvider = ({children}) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   // set up request from the server
-  const fetchQuestions = async (url) => {
+  const fetchQuestions = async url => {
     setLoading(true);
     setWaiting(false);
-    const responses = await axios(url).catch(err => console.log(err))
-    
-    // console.log(responses)
-    if(responses){
-      const data = responses.data.results
+    const responses = await axios(url).catch(err => console.log(err));
 
-      if(data.length > 0){
+    // console.log(responses)
+    if (responses) {
+      const data = responses.data.results;
+
+      if (data.length > 0) {
         // if they are return an array of questions, then set setQuestions with this array
         setQuestions(data);
 
         setLoading(false);
         setWaiting(false);
         setError(false);
-       } else {
+      } else {
         setWaiting(true);
         setError(true);
       }
-      
     } else {
-      setWaiting(true)
+      setWaiting(true);
     }
+  };
 
-  
-
-  }
-  
+  // next question
+  const nextQuestion = () => {
+    setIndex(oldIndex => {
+      const index = oldIndex + 1;
+      if (index > questions.length - 1) {
+        // openModal()
+        return 0;
+      } else {
+        return index;
+      }
+    });
+  };
 
   useEffect(() => {
-    fetchQuestions(tempUrl)
-  }, [])
+    fetchQuestions(tempUrl);
+  }, []);
 
   return (
     <AppContext.Provider
@@ -70,8 +78,9 @@ const AppProvider = ({children}) => {
         questions,
         index,
         correct,
-        isModalOpen,
         error,
+        isModalOpen,
+        nextQuestion,
       }}
     >
       {children}

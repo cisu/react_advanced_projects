@@ -6,7 +6,7 @@ import Loading from './Loading';
 import Modal from './Modal';
 
 function App() {
-  const {waiting, loading, questions, index, correct, error} =
+  const {waiting, loading, questions, index, correct, error, nextQuestion} =
     useGlobalContext();
 
   // if we are waiting display SetupForm component
@@ -50,7 +50,7 @@ function App() {
           </div>
         </article>
 
-          <button className="next-question">
+          <button className="next-question" onClick={nextQuestion}>
             next question
           </button>
 
