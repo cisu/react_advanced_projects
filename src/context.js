@@ -27,7 +27,40 @@ const AppProvider = ({children}) => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const 
+  // set up request from the server
+  const fetchQuestions = async (url) => {
+    setLoading(true);
+    setWaiting(false);
+    const responses = await axios(url).catch(err => console.log(err))
+    
+    // console.log(responses)
+    if(responses){
+      const data = responses.data.results
+
+      if(data.length > 0){
+        // if they are return an array of questions, then set setQuestions with this array
+        setQuestions(data);
+
+        setLoading(false);
+        setWaiting(false);
+        setError(false);
+       } else {
+        setWaiting(true);
+        setError(true);
+      }
+      
+    } else {
+      setWaiting(true)
+    }
+
+  
+
+  }
+  
+
+  useEffect(() => {
+    fetchQuestions(tempUrl)
+  }, [])
 
   return (
     <AppContext.Provider
