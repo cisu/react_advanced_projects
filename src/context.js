@@ -27,8 +27,8 @@ const AppProvider = ({children}) => {
   const [quiz, setQuiz] = useState({
     amount: 10,
     category: 'sports',
-    difficulty: 'easy'
-  })
+    difficulty: 'easy',
+  });
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -58,62 +58,64 @@ const AppProvider = ({children}) => {
     }
   };
 
-
   // next question
   const nextQuestion = () => {
     setIndex(oldIndex => {
       const index = oldIndex + 1;
       if (index > questions.length - 1) {
-        
         // open the modal
-        openModal()
+        openModal();
 
         return 0;
-
       } else {
         return index;
       }
     });
   };
 
-
   // check in the answer is the right one or you skip the question
   const checkAnswer = value => {
-    if(value){
-      setCorrect((oldState) => oldState +1)
+    if (value) {
+      setCorrect(oldState => oldState + 1);
     }
-    nextQuestion()
-  }
+    nextQuestion();
+  };
 
   // open Modal
   const openModal = () => {
     setIsModalOpen(true);
-  }
+  };
 
   // close Modal
   const closeModal = () => {
     setWaiting(true);
     setCorrect(0);
     setIsModalOpen(false);
-  }
-
+  };
 
   // useEffect(() => {
   //   fetchQuestions(tempUrl);
   // }, []);
 
-  const handleChange = (e) => {
-    const name = e.target.name
-    const value = e.target.value
-    
-    setQuiz({
-      ...quiz, [name]: value
-    })
-  }
+  const handleChange = e => {
+    const name = e.target.name;
+    const value = e.target.value;
 
-  const handleSubmit = (e) => {
+    setQuiz({
+      ...quiz,
+      [name]: value,
+    });
+  };
+
+  const handleSubmit = e => {
     e.preventDefault();
-  }
+
+    const {amount, category, difficulty} = quiz;
+
+    const url = `${API_ENDPOINT}amount=${amount}&category=${table[category]}&difficulty=${difficulty}&type=multiple`;
+
+    fetchQuestions(url)
+  };
 
   return (
     <AppContext.Provider
@@ -130,7 +132,7 @@ const AppProvider = ({children}) => {
         closeModal,
         quiz,
         handleChange,
-        handleSubmit
+        handleSubmit,
       }}
     >
       {children}
