@@ -29,7 +29,21 @@ function App() {
 
   const {question, incorrect_answers, correct_answer} = questions[index];
 
-  const answers = [...incorrect_answers, correct_answer];
+  // const answers = [...incorrect_answers, correct_answer];
+
+  let answers = [...incorrect_answers]
+
+  // generate rambo numbers
+  const tempIndex = Math.floor(Math.random() * 4)
+
+  if(tempIndex === 3){
+    answers.push(correct_answer)
+  }else{
+    // place the position of the random number to the ane of array
+    answers.push(answers[tempIndex])
+    // replace the moved position to the correct_answer
+    answers[tempIndex] = correct_answer
+  }
 
   // console.log(questions[1])
 
